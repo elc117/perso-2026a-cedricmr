@@ -1,0 +1,20 @@
+module Logica where
+
+import Tipos
+
+
+-- Filtra por grupo muscular
+filtrarPorGrupo :: String -> [Treino] -> [Treino]
+filtrarPorGrupo grupo = filter (\t -> grupoMuscular t == grupo)
+
+-- Volume total: series * reps * carga
+volumeTreino :: [Exercicio] -> Double
+volumeTreino exercicios = foldl (\acc e -> acc + fromIntegral (series e * repeticoes e) * cargaKg e) 0 exercicios
+
+-- Maior carga de um exercício
+maiorCarga :: String -> [Exercicio] -> Maybe Double
+maiorCarga nome exercicios =
+    let filtrados = filter (\e -> nomeExercicio e == nome) exercicios
+    in case filtrados of
+        [] -> Nothing
+        xs -> Just $ maximum $ map cargaKg xs

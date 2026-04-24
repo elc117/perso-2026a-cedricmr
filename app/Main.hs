@@ -1,13 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+module Main where
+
 import Web.Scotty
-import Data.Monoid(mconcat)
+import Rotas
+import Testes
 
 main :: IO ()
-main = scotty 3000 $ do
-  get "/" $ do
-    text "isso é um teste"
-
-  get "/:word" $ do
-    beam <- pathParam "word"
-    html $ mconcat ["<h1>scotty, ", beam, " me up!</h1>"]
+main = do
+    Testes.main
+    scotty 3000 rotas
