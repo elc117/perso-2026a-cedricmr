@@ -3,6 +3,7 @@
 module Main where
 
 import Web.Scotty
+import Network.Wai.Middleware.Cors
 import Rotas
 import Testes
 import Banco
@@ -13,4 +14,11 @@ main = do
     Testes.main
     conn <- open "diario.db"
     iniciarBanco conn
-    scotty 3000 (rotas conn)
+    scotty 3000 $ do
+        middleware (cors (const $ Just policy))
+        rotas conn
+  where
+    policy = simpleCorsResourcePolicy
+        { corsRequestHeaders = ["Content-Type"]
+        , corsMethods = ["GET", "POST"]
+        }
