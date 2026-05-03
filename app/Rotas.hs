@@ -3,8 +3,18 @@
 module Rotas where
 
 import Web.Scotty
+import Data.Aeson (toJSON)
+import Tipos
+
+-- Dados simulados
+treinosMock :: [Treino]
+treinosMock =
+    [ Treino 1 "2026-04-01" "Peito" "Treino leve"
+    , Treino 2 "2026-04-03" "Costas" ""
+    , Treino 3 "2026-04-05" "Peito" "Treino pesado"
+    ]
 
 rotas :: ScottyM ()
 rotas = do
-    get "/" $ do
-        text "Diário de Treinos API funcionando!"
+    get "/treinos" $ do
+        json (toJSON treinosMock)
