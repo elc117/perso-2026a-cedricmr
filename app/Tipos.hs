@@ -5,6 +5,8 @@ module Tipos where
 
 import Data.Aeson (ToJSON, FromJSON)
 import GHC.Generics (Generic)
+import Database.SQLite.Simple (FromRow)
+import Database.SQLite.Simple.FromRow (fromRow, field)
 
 data Treino = Treino
     { treinoId      :: Int
@@ -12,6 +14,9 @@ data Treino = Treino
     , grupoMuscular :: String
     , observacao    :: String
     } deriving (Show, Eq, Generic, ToJSON, FromJSON)
+
+instance FromRow Treino where
+    fromRow = Treino <$> field <*> field <*> field <*> field
 
 data Exercicio = Exercicio
     { exercicioId   :: Int
@@ -21,3 +26,6 @@ data Exercicio = Exercicio
     , repeticoes    :: Int
     , cargaKg       :: Double
     } deriving (Show, Eq, Generic, ToJSON, FromJSON)
+
+instance FromRow Exercicio where
+    fromRow = Exercicio <$> field <*> field <*> field <*> field <*> field <*> field

@@ -67,7 +67,7 @@ executable haskell-server
         Logica
         Rotas
         Testes
-
+        Banco
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
 
@@ -81,4 +81,4 @@ executable haskell-server
     default-language: Haskell2010
 
     -- Dependencies
-    build-depends: base >=4.7 && <5, scotty, text, aeson, http-types
+    build-depends: base >=4.7 && <5, scotty, text, aeson, http-types, sqlite-simple

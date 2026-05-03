@@ -11,8 +11,8 @@
 
 ## 1. Identificação
 
-- Nome:
-- Curso:
+- Nome: Cedric Marques Rocha
+- Curso: Sistemas de Informação
 
 ---
 

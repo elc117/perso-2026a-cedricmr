@@ -6,7 +6,9 @@ import Web.Scotty
 import Data.Aeson (toJSON)
 import Tipos
 import Logica
+import Banco
 import Network.HTTP.Types.Status (status404)
+import Database.SQLite.Simple
 
 -- Dados simulados
 treinosMock :: [Treino]
@@ -24,24 +26,27 @@ exerciciosMock =
     , Exercicio 4 2 "Remada" 3 10 50.0
     ]
 
-rotas :: ScottyM ()
-rotas = do
+rotas :: Connection -> ScottyM ()
+rotas conn = do
     get "/treinos" $ do
-        json (toJSON treinosMock)
+        treinos <- liftIO (buscarTreinos conn)
+        json (toJSON treinos)
 
     get "/treinos/:id" $ do
         tid <- pathParam "id"
-        case buscarPorId tid treinosMock of
+        treinos <- liftIO (buscarTreinos conn)
+        case buscarPorId tid treinos of
             Nothing -> do
                 status status404
                 json ("Treino não encontrado" :: String)
             Just treino -> json (toJSON treino)
-    
+
     get "/treinos/:id/exercicios" $ do
         tid <- pathParam "id"
-        json (toJSON (exerciciosDeTreino tid exerciciosMock))
+        exercicios <- liftIO (buscarExercicios conn tid)
+        json (toJSON exercicios)
 
     post "/treinos" $ do
         treino <- jsonData
-        json (toJSON (treino :: Treino))    
-
+        liftIO (inserirTreino conn treino)
+        json (toJSON (treino :: Treino))
