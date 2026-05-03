@@ -46,7 +46,26 @@ rotas conn = do
         exercicios <- liftIO (buscarExercicios conn tid)
         json (toJSON exercicios)
 
+    get "/exercicios/:nome/evolucao" $ do
+        nome <- pathParam "nome"
+        exercicios <- liftIO (buscarExerciciosPorNome conn nome)
+        json (toJSON (evolucaoCarga exercicios))
+
+    get "/stats/recordes" $ do
+        exercicios <- liftIO (buscarTodosExercicios conn)
+        json (toJSON (recordes exercicios))
+
+    get "/stats/frequencia" $ do
+        treinos <- liftIO (buscarTreinos conn)
+        json (toJSON (frequenciaPorGrupo treinos))
+
     post "/treinos" $ do
         treino <- jsonData
         liftIO (inserirTreino conn treino)
         json (toJSON (treino :: Treino))
+
+    post "/treinos/:id/exercicios" $ do
+        tid <- pathParam "id"
+        exercicio <- jsonData
+        liftIO (inserirExercicio conn (exercicio { treinoIdRef = tid }))
+        json (toJSON (exercicio :: Exercicio))

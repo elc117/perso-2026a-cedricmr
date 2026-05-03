@@ -30,3 +30,22 @@ buscarPorId treinoId_ treinos =
 -- Busca exercicios de um treino
 exerciciosDeTreino :: Int -> [Exercicio] -> [Exercicio]
 exerciciosDeTreino tid = filter (\e -> treinoIdRef e == tid)
+
+-- Evolução de carga de um exercício
+evolucaoCarga :: [Exercicio] -> [Double]
+evolucaoCarga exercicios = map cargaKg exercicios
+
+-- Recordes por exercicio (nome, maior carga)
+recordes :: [Exercicio] -> [(String, Double)]
+recordes exercicios =
+    let nomes = map nomeExercicio exercicios
+        unicos = foldl (\acc n -> if n `elem` acc then acc else acc ++ [n]) [] nomes
+    in map (\n -> (n, maybe 0 id (maiorCarga n exercicios))) unicos
+
+
+-- Quantidade de treinos por grupo muscular
+frequenciaPorGrupo :: [Treino] -> [(String, Int)]
+frequenciaPorGrupo treinos =
+    let grupos = map grupoMuscular treinos
+        unicos = foldl (\acc g -> if g `elem` acc then acc else acc ++ [g]) [] grupos
+    in map (\g -> (g, length (filtrarPorGrupo g treinos))) unicos

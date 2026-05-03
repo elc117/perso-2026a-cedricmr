@@ -42,3 +42,18 @@ buscarTreinos conn =
 buscarExercicios :: Connection -> Int -> IO [Exercicio]
 buscarExercicios conn tid =
     query conn "SELECT id, treino_id, nome, series, repeticoes, carga_kg FROM exercicios WHERE treino_id = ?" (Only tid)
+
+inserirExercicio :: Connection -> Exercicio -> IO ()
+inserirExercicio conn exercicio =
+    execute conn
+        "INSERT INTO exercicios (treino_id, nome, series, repeticoes, carga_kg) VALUES (?, ?, ?, ?, ?)"
+        (treinoIdRef exercicio, nomeExercicio exercicio, series exercicio, repeticoes exercicio, cargaKg exercicio)
+
+buscarExerciciosPorNome :: Connection -> String -> IO [Exercicio]
+buscarExerciciosPorNome conn nome =
+    query conn "SELECT id, treino_id, nome, series, repeticoes, carga_kg FROM exercicios WHERE nome = ?" (Only nome)
+
+
+buscarTodosExercicios :: Connection -> IO [Exercicio]
+buscarTodosExercicios conn =
+    query_ conn "SELECT id, treino_id, nome, series, repeticoes, carga_kg FROM exercicios"
