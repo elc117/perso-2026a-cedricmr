@@ -60,7 +60,7 @@
 
     <script>
         async function carregarTreinos() {
-            const resposta = await fetch('http://localhost:3000/treinos');
+            const resposta = await fetch('https://perso-2026a-cedricmr.onrender.com/treinos');
             const treinos = await resposta.json();
             const lista = document.getElementById('lista-treinos');
 
@@ -70,7 +70,7 @@
             }
 
             const treinosHtml = await Promise.all(treinos.map(async t => {
-                const respEx = await fetch(`http://localhost:3000/treinos/${t.treinoId}/exercicios`);
+                const respEx = await fetch(`https://perso-2026a-cedricmr.onrender.com/treinos/${t.treinoId}/exercicios`);
                 const exercicios = await respEx.json();
 
                 const exerciciosHtml = exercicios.length === 0
@@ -118,7 +118,7 @@
                 return;
             }
 
-            await fetch('http://localhost:3000/treinos', {
+            await fetch('https://perso-2026a-cedricmr.onrender.com/treinos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -148,7 +148,7 @@
                 return;
             }
 
-            await fetch(`http://localhost:3000/treinos/${tid}/exercicios`, {
+            await fetch(`https://perso-2026a-cedricmr.onrender.com/treinos/${tid}/exercicios`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -166,7 +166,7 @@
         }
 
         async function carregarRecordes() {
-            const resp = await fetch('http://localhost:3000/stats/recordes');
+            const resp = await fetch('https://perso-2026a-cedricmr.onrender.com/stats/recordes');
             const dados = await resp.json();
             const div = document.getElementById('recordes');
             div.innerHTML = dados.length === 0
@@ -177,7 +177,7 @@
         }
 
         async function carregarFrequencia() {
-            const resp = await fetch('http://localhost:3000/stats/frequencia');
+            const resp = await fetch('https://perso-2026a-cedricmr.onrender.com/stats/frequencia');
             const dados = await resp.json();
             const div = document.getElementById('frequencia');
             div.innerHTML = dados.length === 0
@@ -194,7 +194,7 @@
                 alert('Digite o nome do exercício');
                 return;
             }
-            const resp = await fetch(`http://localhost:3000/exercicios/${nome}/evolucao`);
+            const resp = await fetch(`https://perso-2026a-cedricmr.onrender.com/exercicios/${nome}/evolucao`);
             const cargas = await resp.json();
 
             if (graficoEvolucao) graficoEvolucao.destroy();
