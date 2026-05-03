@@ -26,3 +26,7 @@ buscarPorId treinoId_ treinos =
     in if null filtrados
         then Nothing
         else Just (head filtrados)
+
+-- Busca exercicios de um treino
+exerciciosDeTreino :: Int -> [Exercicio] -> [Exercicio]
+exerciciosDeTreino tid = filter (\e -> treinoIdRef e == tid)
