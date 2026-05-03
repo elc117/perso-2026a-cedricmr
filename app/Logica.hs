@@ -18,3 +18,11 @@ maiorCarga nome exercicios =
     in case filtrados of
         [] -> Nothing
         xs -> Just $ maximum $ map cargaKg xs
+
+-- Busca treino por id
+buscarPorId :: Int -> [Treino] -> Maybe Treino
+buscarPorId treinoId_ treinos =
+    let filtrados = filter (\t -> treinoId t == treinoId_) treinos
+    in if null filtrados
+        then Nothing
+        else Just (head filtrados)

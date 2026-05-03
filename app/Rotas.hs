@@ -5,6 +5,8 @@ module Rotas where
 import Web.Scotty
 import Data.Aeson (toJSON)
 import Tipos
+import Logica
+import Network.HTTP.Types.Status (status404)
 
 -- Dados simulados
 treinosMock :: [Treino]
@@ -18,3 +20,12 @@ rotas :: ScottyM ()
 rotas = do
     get "/treinos" $ do
         json (toJSON treinosMock)
+
+    get "/treinos/:id" $ do
+        tid <- pathParam "id"
+        case buscarPorId tid treinosMock of
+            Nothing -> do
+                status status404
+                json ("Treino não encontrado" :: String)
+            Just treino -> json (toJSON treino)
+
