@@ -84,10 +84,11 @@ O deploy foi realizado no Render via Docker, já que Haskell não tem suporte na
 
 ## 7. Resultado final
 
-demonstração:
+demonstração feita no com o backend rodando no render:
 https://youtu.be/iXZRF8m2hoU (velocidade 2x)
 
 O vídeo demonstra o funcionamento do serviço cadastro de um novo treino, adição de um exercício, visualização do histórico, estatísticas de recordes e frequência por grupo muscular, e o gráfico de evolução.
+
 ---
 
 ## 8. Uso de IA 
